@@ -1,3 +1,11 @@
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "10mb",
+    },
+  },
+};
+
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).end();
   const { imageBase64 } = req.body;
@@ -21,7 +29,7 @@ export default async function handler(req, res) {
               source: {
                 type: "base64",
                 media_type: "image/jpeg",
-                data: imageBase64.replace(/^data:image\/\w+;base64,/, ""),
+                data: imageBase64,
               }
             },
             {
