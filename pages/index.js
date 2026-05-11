@@ -1,8 +1,3 @@
-bash
-
-cat /home/claude/kakeibo/pages/index.js | sed 's/const USERS = \["自分", "嫁"\];/const USERS = ["瞬", "香琳"];/' | sed 's/u === "自分" ? "👤" : "👰"/u === "瞬" ? "👤" : "👰"/' | sed 's/{user === "自分" ? "👤" : "👰"}/{user === "瞬" ? "👤" : "👰"}/'
-出力
-
 import { useState, useRef, useCallback } from "react";
 import Head from "next/head";
 
