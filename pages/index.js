@@ -39,9 +39,21 @@ export default function Home() {
     setSaved(null);
     const reader = new FileReader();
     reader.onload = (e) => {
-      const b64 = e.target.result.split(",")[1];
-      setImageBase64(b64);
-    };
+  const canvas = document.createElement("canvas");
+  const img = new Image();
+  img.onload = () => {
+    const MAX = 1200;
+    let w = img.width, h = img.height;
+    if (w > MAX || h > MAX) {
+      if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+      else { w = Math.round(w * MAX / h); h = MAX; }
+    }
+    canvas.width = w; canvas.height = h;
+    canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+    setImageBase64(canvas.toDataURL("image/jpeg", 0.85).split(",")[1]);
+  };
+  img.src = e.target.result;
+};
     reader.readAsDataURL(file);
   }, []);
 
