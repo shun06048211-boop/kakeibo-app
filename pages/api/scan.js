@@ -41,11 +41,12 @@ export default async function handler(req, res) {
       })
     });
     const data = await response.json();
-    const text = data.content?.find(b => b.type === "text")?.text || "";
-    const match = text.match(/\{[\s\S]*\}/);
-    if (!match) throw new Error("読み取り失敗");
-    const parsed = JSON.parse(match[0]);
-    res.json({ ok: true, data: parsed });
+   if (data.error) throw new Error(data.error.message);
+const text = data.content?.find(b => b.type === "text")?.text || "";
+const match = text.match(/\{[\s\S]*\}/);
+if (!match) throw new Error(`JSON取得失敗: ${text.slice(0,100)}`);
+const parsed = JSON.parse(match[0]);
+res.json({ ok: true, data: parsed });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
